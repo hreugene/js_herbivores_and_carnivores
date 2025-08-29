@@ -12,9 +12,9 @@ class Animal {
   }
 
   // Видаляє тварину зі списку коли та помирає
-  die() {
-    Animal.alive = Animal.alive.filter((a) => a !== this);
-  }
+  // die() {
+  //   Animal.alive = Animal.alive.filter((a) => a !== this);
+  // }
 }
 
 class Herbivore extends Animal {
@@ -32,18 +32,13 @@ class Herbivore extends Animal {
 class Carnivore extends Animal {
   bite(target) {
     // Працює тільки якщо цшіль є травоїдною і не схованою
-    if (!(target instanceof Herbivore)) {
-      return;
+    if (target instanceof Herbivore && !target.hidden) {
+      /* reduce health by 50; then filter Animal.alive */
+      target.health -= 50;
     }
-
-    if (target.hidden) {
-      return;
-    }
-
-    target.health -= 50;
 
     if (target.health <= 0) {
-      target.die();
+      Animal.alive = Animal.alive.filter((a) => a.health > 0);
     }
   }
 }
